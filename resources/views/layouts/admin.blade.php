@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('page-title')</title>
 
 
     <!-- Fonts -->
@@ -33,6 +33,10 @@
                     </div>
 
                     <div class="col-10">
+
+                        @include('partials.errors')
+                        @include('partials.messages')
+
                         @yield('content')
                     </div>
                 </div>
