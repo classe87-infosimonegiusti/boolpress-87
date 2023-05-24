@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\ProfileController;
@@ -33,6 +34,10 @@ Route::middleware(['auth', 'verified'])
         Route::resource('posts', PostController::class)->parameters([
             'posts' => 'post:slug' //https://laravel.com/docs/9.x/controllers#restful-naming-resource-route-parameters
         ]);
+
+        Route::resource('categories', CategoryController::class)->parameters([
+            'categories' => 'category:slug'
+        ])->only(['index']);
     });
 
 Route::middleware('auth')

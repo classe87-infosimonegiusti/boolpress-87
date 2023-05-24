@@ -8,6 +8,8 @@
 <h1>{{$post->title}}</h1>
 <h6><small>Slug: {{$post->slug}}</small></h6>
 
+<h3>Categoria: {{$post->category?$post->category->name:'Nessuna categoria abbinata'}}</h3>
+
 @if ($post->cover_image)
     <img class="img-thumbnail" src="{{$post->cover_image}}" alt="{{$post->title}}"/>
 @endif
