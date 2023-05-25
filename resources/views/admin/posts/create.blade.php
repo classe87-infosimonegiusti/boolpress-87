@@ -53,6 +53,19 @@
             @enderror
         </div>
 
+        <div class="mb-3">
+            @foreach($tags as $tag)
+                <input id="tag_{{$tag->id}}" @if (in_array($tag->id , old('tags', []))) checked @endif type="checkbox" name="tags[]" value="{{$tag->id}}">
+                <label for="tag_{{$tag->id}}"  class="form-label">{{$tag->name}}</label>
+                <br>
+            @endforeach
+            @error('tags')
+                <div class="invalid-feedback">
+                    {{$message}}
+                </div>
+            @enderror
+        </div>
+
         <button type="submit" class="btn btn-primary">Salva</button>
 
     </form>

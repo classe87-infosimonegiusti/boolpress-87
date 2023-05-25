@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Post;
 use Illuminate\Support\Facades\Route;
@@ -24,21 +25,36 @@ Route::get('/', function () {
 });
 
 
+
 // /admin/posts/......
-Route::middleware(['auth', 'verified'])
-    ->name('admin.')
-    ->prefix('admin')
-    ->group(function () {
+Route::middleware(['auth', 'verified'])->name('admin.')->prefix('admin')->group(function () {
+
         // ->prefix('admin') concatenato con '/'
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard'); //dashboard
+
+
         Route::resource('posts', PostController::class)->parameters([
             'posts' => 'post:slug' //https://laravel.com/docs/9.x/controllers#restful-naming-resource-route-parameters
         ]);
 
+
         Route::resource('categories', CategoryController::class)->parameters([
             'categories' => 'category:slug'
         ])->only(['index']);
+
+
+        Route::resource('tags', TagController::class)->parameters([
+            'tags' => 'tag:slug'
+        ])->only(['index']);
+
+
+
     });
+
+
+
+
+
 
 Route::middleware('auth')
     ->name('profile.')

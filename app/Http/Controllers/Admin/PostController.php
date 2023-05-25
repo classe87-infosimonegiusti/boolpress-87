@@ -6,6 +6,7 @@ use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
 
 class PostController extends Controller
 {
@@ -27,8 +28,12 @@ class PostController extends Controller
      */
     public function create()
     {
+
         $categories = Category::all();
-        return view('admin.posts.create', compact('categories'));
+        $tags = Tag::all();
+
+        return view('admin.posts.create', compact('categories', 'tags'));
+
     }
 
     /**
@@ -50,6 +55,10 @@ class PostController extends Controller
         }
 
         $newPost = Post::create($validated_data);
+
+        if ($request->has('tags')) {
+            $newPost->tags()->attach($request->tags);
+        }
 
         return redirect()->route('admin.posts.show', ['post' => $newPost->slug])->with('status', 'Post creato con successo!');
 
@@ -75,7 +84,8 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $categories = Category::all();
-        return view('admin.posts.edit', compact('post', 'categories'));
+        $tags = Tag::all();
+        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -97,7 +107,11 @@ class PostController extends Controller
             return back()->withInput()->withErrors(['slug' => 'Impossibile creare lo slug']);
         }
 
+        $post->tags()->sync($request->tags);
+
         $post->update($validated_data);
+
+
         return redirect()->route('admin.posts.show', ['post' => $post->slug])->with('status', 'Post modificato con successo!');
 
     }

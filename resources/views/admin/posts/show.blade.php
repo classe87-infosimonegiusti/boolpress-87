@@ -10,6 +10,11 @@
 
 <h3>Categoria: {{$post->category?$post->category->name:'Nessuna categoria abbinata'}}</h3>
 
+@foreach ($post->tags as $tag)
+    <span class="badge rounded-pill text-bg-primary">{{$tag->name}}</span>
+@endforeach
+
+
 @if ($post->cover_image)
     <img class="img-thumbnail" src="{{$post->cover_image}}" alt="{{$post->title}}"/>
 @endif

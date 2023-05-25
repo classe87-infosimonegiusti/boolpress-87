@@ -13,6 +13,7 @@
         <th scope="col">Titolo</th>
         <th scope="col">Slug</th>
         <th scope="col">Categoria</th>
+        <th scope="col">Tags</th>
         <th scope="col">Azioni</th>
       </tr>
     </thead>
@@ -22,7 +23,12 @@
                 <td>{{$post->id}}</td>
                 <td>{{$post->title}}</td>
                 <td>{{$post->slug}}</td>
-                <td>{{$post->category?->name}}</td> 
+                <td>{{$post->category?->name}}</td>
+                <td>
+                    @foreach ($post->tags as $tag)
+                    <span class="badge rounded-pill text-bg-primary">{{$tag->name}}</span>
+                    @endforeach
+                </td>
                 <td>
                     <a class="btn btn-primary" href="{{route('admin.posts.show', $post->slug)}}">VEDI</a>
                     <a class="btn btn-warning" href="{{route('admin.posts.edit', $post->slug)}}">MODIFICA</a>
