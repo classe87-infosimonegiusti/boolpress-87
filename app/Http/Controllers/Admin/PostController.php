@@ -7,6 +7,7 @@ use App\Http\Requests\UpdatePostRequest;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -52,6 +53,15 @@ class PostController extends Controller
         $checkPost = Post::where('slug', $validated_data['slug'])->first();
         if ($checkPost) {
             return back()->withInput()->withErrors(['slug' => 'Impossibile creare lo slug per questo post, cambia il titolo']);
+        }
+
+        //if (array_key_exists('cover_image', $request->all()) {
+
+        //}
+
+        if ($request->hasFile('cover_image')) {
+            $path = Storage::put('cover', $request->cover_image);
+            $validated_data['cover_image'] = $path;
         }
 
         $newPost = Post::create($validated_data);
@@ -107,6 +117,19 @@ class PostController extends Controller
             return back()->withInput()->withErrors(['slug' => 'Impossibile creare lo slug']);
         }
 
+
+        if ($request->hasFile('cover_image')) {
+
+            if ($post->cover_image) {
+                Storage::delete($post->cover_image);
+            }
+
+            $path = Storage::put('cover', $request->cover_image);
+            $validated_data['cover_image'] = $path;
+
+        }
+
+
         $post->tags()->sync($request->tags);
 
         $post->update($validated_data);
@@ -124,7 +147,27 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+
+        if ($post->cover_image) {
+            Storage::delete($post->cover_image);
+        }
+
         $post->delete();
         return redirect()->route('admin.posts.index');
+    }
+
+
+    public function deleteImage($slug) {
+
+        $post = Post::where('slug', $slug)->firstOrFail();
+
+        if ($post->cover_image) {
+            Storage::delete($post->cover_image);
+            $post->cover_image = null;
+            $post->save();
+        }
+
+        return redirect()->route('admin.posts.edit', $post->slug);
+
     }
 }

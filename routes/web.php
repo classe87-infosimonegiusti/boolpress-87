@@ -37,6 +37,7 @@ Route::middleware(['auth', 'verified'])->name('admin.')->prefix('admin')->group(
             'posts' => 'post:slug' //https://laravel.com/docs/9.x/controllers#restful-naming-resource-route-parameters
         ]);
 
+        Route::get('posts/{slug}/deleteImage', [PostController::class, 'deleteImage'])->name('posts.deleteImage');
 
         Route::resource('categories', CategoryController::class)->parameters([
             'categories' => 'category:slug'

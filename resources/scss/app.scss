@@ -1,1 +1,21 @@
-@import '~bootstrap/scss/bootstrap'
+@import '~bootstrap/scss/bootstrap';
+
+
+.my-img-index {
+    width: 120px;
+}
+
+.my-img-thumb {
+    width: 100%;
+}
+
+.my-img-wrapper {
+    position: relative;
+    width: 250px;
+
+    .my-img-delete {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+}
