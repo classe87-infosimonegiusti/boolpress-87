@@ -16,7 +16,7 @@
 
 
 @if ($post->cover_image)
-    <img class="img-thumbnail" src="{{$post->cover_image}}" alt="{{$post->title}}"/>
+    <img class="img-thumbnail" src="{{asset('storage/' . $post->cover_image)}}" alt="{{$post->title}}"/>
 @endif
 
 <p>{{$post->content}}</p>
