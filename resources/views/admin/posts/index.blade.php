@@ -32,7 +32,7 @@
                 <td>{{$post->category?->name}}</td>
                 <td>
                     @foreach ($post->tags as $tag)
-                    <span class="badge rounded-pill text-bg-primary">{{$tag->name}}</span>
+                        <span class="badge rounded-pill text-bg-primary">{{$tag->name}}</span>
                     @endforeach
                 </td>
                 <td>
