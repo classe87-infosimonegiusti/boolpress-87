@@ -26,7 +26,7 @@
             @if ($post->cover_image)
             <div class="my-img-wrapper">
                 <img class="img-thumbnail my-img-thumb" src="{{asset('storage/' . $post->cover_image)}}" alt="{{$post->title}}"/>
-                <a href="{{route('admin.posts.deleteImage', ['slug' => $post->slug])}}" class="my-img-delete btn btn-danger">X</a>
+                <div id="btn-delete" class="my-img-delete btn btn-danger">X</div>
             </div>
             @endif
 
@@ -86,5 +86,12 @@
         <button type="submit" class="btn btn-primary">Salva</button>
 
     </form>
+
+
+    <form id="form-delete" action="{{route('admin.posts.deleteImage', ['slug' => $post->slug])}}" method="POST">
+        @csrf
+        @method('DELETE')
+    </form>
+
 
 @endsection

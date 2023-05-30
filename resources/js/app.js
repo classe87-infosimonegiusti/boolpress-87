@@ -27,3 +27,15 @@ deleteButtons.forEach(button => {
         });
     })
 });
+
+
+const btnDelete = document.getElementById('btn-delete');
+
+btnDelete.addEventListener('click', function () {
+    const formDelete = document.getElementById('form-delete');
+    formDelete.submit();
+});
+
+
+
+
