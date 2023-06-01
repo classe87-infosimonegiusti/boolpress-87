@@ -23,11 +23,17 @@ class PostController extends Controller
 
         $post = Post::where('slug', $slug)->with(['category', 'tags'])->first();
 
-        return response()->json([
-            'success' => true,
-            'post' => $post
-        ]);
-
+        if ($post) {
+            return response()->json([
+                'success' => true,
+                'post' => $post
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'error' => 'Post non trovato!'
+            ]);
+        }
 
     }
 
